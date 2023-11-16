@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <img alt="logo" width="60%" src="/assets/img/registrApp logo.png" />
+    <img alt="logo" width="100%" src="/assets/img/registrApp logo.png" />
   </ion-toolbar>
 </ion-header>
 
@@ -21,9 +21,20 @@
         Bienvenido {{ nombreUsuario }}!
       </ion-card-subtitle>
     </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-button (click)="registroAsistencia()">Registra tu asistencia</ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button [routerLink]="'/inicio'">Volver</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
   </ion-card>
 
-  <ion-button (click)="registroAsistencia()">Registra tu asistencia</ion-button>
 
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button (click)="scan()" >

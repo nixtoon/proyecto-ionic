@@ -63,10 +63,21 @@ export class HomePage {
     await alert.present();
   }
 
+// mensaje al usuario
+async registroExitoso() {
+  const alert = await this.alertController.create({
+    header: 'Registro exitoso',
+    message: 'Asistencia registrada correctamente',
+    buttons: ['OK']
+  });
+
+  await alert.present();
+}
+
   // mensaje al usuario
   async noData() {
     const alert = await this.alertController.create({
-      header: 'Error al escanear QR',
+      header: 'Primero escanea el QR',
       message: 'No es posible registrar tu asistencia',
       buttons: ['OK']
     });
@@ -81,9 +92,10 @@ export class HomePage {
     } else {
       this.apiService.registrarAsistencia(this.scannedData, this.presente).subscribe(
         (response) => {
-          // Manejar la respuesta del servicio
-          console.log('Asistencia registrada correctamente', response);
-          this.showScanResultAlert();
+          if(response){
+            console.log('Asistencia registrada correctamente', response);
+            this.registroExitoso();
+          }
         },
         (error) => {
           if (error instanceof HttpErrorResponse) {
