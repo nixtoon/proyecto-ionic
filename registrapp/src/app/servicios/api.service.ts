@@ -22,6 +22,10 @@ export class ApiService {
     return this.http.get(this.apiUrl + "/buscarUsuario" + '?nombre_usuario=' + nombreUsuario + '&password=' + password).pipe(retry(3))
   }
 
+  buscarDocente(nombreUsuario: string, password: string): Observable<any> {
+    return this.http.get(this.apiUrl + "/buscarDocente" + '?nombre_docente=' + nombreUsuario + '&password_docente=' + password).pipe(retry(3))
+  }
+
   recovery(nombreUsuario: string): Observable<any> {
     return this.http.get(this.apiUrl + "/recovery" + '?nombre_usuario=' + nombreUsuario).pipe(retry(3))
   }

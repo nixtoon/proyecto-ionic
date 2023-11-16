@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { RecoveryPageRoutingModule } from './recovery-routing.module';
 
 import { RecoveryPage } from './recovery.page';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    RecoveryPageRoutingModule
+    RecoveryPageRoutingModule,
+    MatProgressSpinnerModule,
   ],
   declarations: [RecoveryPage]
 })

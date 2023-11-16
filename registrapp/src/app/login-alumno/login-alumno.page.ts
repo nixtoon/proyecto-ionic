@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { ApiService } from '../servicios/api.service';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login-alumno',
@@ -10,40 +11,52 @@ import { ApiService } from '../servicios/api.service';
 export class LoginAlumnoPage implements OnInit {
 
   hide = true;
-  private isLoggedIn: boolean = false;
   user = {
     nombre: '',
     password: '',
   }
-  isLoading = false;
+  showSpinner: boolean = false;
 
-  mostrarMensaje: boolean = false;
-
-  constructor(private apiService: ApiService, private router: Router) { }
+  constructor(private apiService: ApiService, private router: Router, private alertController: AlertController) { }
 
   login() {
-    this.isLoading = true;
 
     this.apiService.buscarUsuario(this.user.nombre, this.user.password).subscribe(
       (response) => {
-        if (this.verificarCredenciales(response)) {
+        if (response) {
           localStorage.setItem('ingresado', 'true');
-          this.IrAlHome();
-        } else {
-          console.log('Credenciales incorrectas');
-        }
+          this.showSpinner = true;
+          console.log(response);
+          setTimeout(() => {
+            this.showSpinner = false;
+            this.IrAlHome();
+          }, 3000);
+        } 
       },
       (error) => {
+        this.showSpinner = true;
         console.error('Error en la solicitud:', error);
-      },
-      () => {
-        this.isLoading = false; // Finaliza el estado de carga cuando la solicitud termina
+        setTimeout(() => {
+          this.showSpinner = false;
+          this.credencialesIncorrectas();
+        }, 3000); 
       }
     );
   }
 
   verificarCredenciales(response: any): boolean {
-    return response.User === this.user.nombre && response.password === this.user.password;
+    return response.nombre_usuario === this.user.nombre && response.password === this.user.password;
+  }
+
+  // mensaje al usuario
+  async credencialesIncorrectas() {
+    const alert = await this.alertController.create({
+      header: 'Error',
+      message: 'Nombre de usuario o contraseña incorrectos',
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 
   bloquearBtn(): boolean {
