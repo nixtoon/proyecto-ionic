@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, retry } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { retry, catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,12 +9,13 @@ import { Observable, retry } from 'rxjs';
 
 export class ApiService {
 
-  // httpOptions = {
-  //   headers: new HttpHeaders({
-  //     'Content-Type': 'application/json',
-  //     'Access-Control-Allow-Origin': '*'
-  //   })
-  // }
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    })
+  }
+
 
   constructor(private http: HttpClient) { }
 
@@ -31,11 +33,12 @@ export class ApiService {
     return this.http.get(this.apiUrl + "/recovery" + '?nombre_usuario=' + nombreUsuario).pipe(retry(3))
   }
 
-  registrarAsistencia(cursoId: string, presente: boolean): Observable<any> {
-    const data = {
-      cursoId: cursoId,
-      presente: presente
-    };
-    return this.http.post(this.apiUrl + "/registrar-asistencia", data).pipe(retry(3));
+  registrarAsistencia(data: { curso: string; presente: boolean; }): Observable<any> {
+    return this.http.post(this.apiUrl + "/registrar-asistencia", data, this.httpOptions).pipe(retry(3));
   }
+
+  getCursos(docenteId: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/buscar-cursos?docenteId=${docenteId}`);
+  }
+
 }

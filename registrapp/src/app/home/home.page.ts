@@ -14,7 +14,6 @@ export class HomePage {
 
   barcodes = [];
   scannedData: string = '';
-  presente = true;
   nombreUsuario: string = '';
 
   constructor(private alertController: AlertController, private apiService: ApiService, private activatedRoute: ActivatedRoute, private router: Router) {
@@ -63,16 +62,16 @@ export class HomePage {
     await alert.present();
   }
 
-// mensaje al usuario
-async registroExitoso() {
-  const alert = await this.alertController.create({
-    header: 'Registro exitoso',
-    message: 'Asistencia registrada correctamente',
-    buttons: ['OK']
-  });
+  // mensaje al usuario
+  async registroExitoso() {
+    const alert = await this.alertController.create({
+      header: 'Registro exitoso',
+      message: 'Asistencia registrada correctamente',
+      buttons: ['OK']
+    });
 
-  await alert.present();
-}
+    await alert.present();
+  }
 
   // mensaje al usuario
   async noData() {
@@ -85,29 +84,22 @@ async registroExitoso() {
     await alert.present();
   }
 
-  // registrar asistencia en la base de datos
   registroAsistencia() {
     if (this.scannedData == '') {
       this.noData();
     } else {
-      this.apiService.registrarAsistencia(this.scannedData, this.presente).subscribe(
-        (response) => {
-          if(response){
-            console.log('Asistencia registrada correctamente', response);
-            this.registroExitoso();
-          }
-        },
-        (error) => {
-          if (error instanceof HttpErrorResponse) {
-            console.error('Error HTTP status:', error.status);
-            console.error('Error HTTP body:', error.error);
-          } else {
-            console.error('Error desconocido:', error);
-          }
-        }
-      );
+      var data = {
+        curso: this.scannedData,
+        presente: true,
+      }
+      this.apiService.registrarAsistencia(data).subscribe((success) => {
+        console.log(success);
+        this.registroExitoso();
+      }, error => {
+        console.log(error);
+      })
     }
-
+    
   }
 
 }

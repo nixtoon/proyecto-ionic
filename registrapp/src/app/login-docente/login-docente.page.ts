@@ -16,6 +16,7 @@ export class LoginDocentePage implements OnInit {
     password: '',
   }
   showSpinner: boolean = false;
+  docenteId: string= '';
 
   constructor(private apiService: ApiService, private router: Router, private alertController: AlertController) { }
 
@@ -27,6 +28,7 @@ export class LoginDocentePage implements OnInit {
           localStorage.setItem('ingresado', 'true');
           this.showSpinner = true;
           console.log(response);
+          this.docenteId = response.docente._id;
           setTimeout(() => {
             this.showSpinner = false;
             this.IrAlHome();
@@ -67,7 +69,8 @@ export class LoginDocentePage implements OnInit {
 
     let navigationExtras: NavigationExtras = {
       state: {
-        nombreUsuario: this.user.nombre
+        nombreUsuario: this.user.nombre,
+        docenteId: this.docenteId
       }
     }
     this.router.navigate(['/home-docente'], navigationExtras);
