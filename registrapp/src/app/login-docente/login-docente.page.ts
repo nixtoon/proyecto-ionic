@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { ApiService } from '../servicios/api.service';
 import { AlertController } from '@ionic/angular';
+import { usuario } from '../modelo/usuario';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { GuardGuard } from '../guard/guard.guard';
 
 @Component({
   selector: 'app-login-docente',
@@ -16,24 +19,44 @@ export class LoginDocentePage implements OnInit {
     password: '',
   }
   showSpinner: boolean = false;
-  docenteId: string= '';
 
-  constructor(private apiService: ApiService, private router: Router, private alertController: AlertController) { }
+  private typeuser!: usuario;
+
+  constructor(private apiService: ApiService, private router: Router, private alertController: AlertController, private auth: GuardGuard) { }
+
+  usuario = new FormGroup({
+    user: new FormControl('',[Validators.required, Validators.minLength(4),Validators.maxLength(20)]),
+    pass: new FormControl('',[Validators.required, Validators.minLength(4),Validators.maxLength(20)]),
+  });
 
   login() {
 
-    this.apiService.buscarDocente(this.user.nombre, this.user.password).subscribe(
+    this.apiService.login(this.user.nombre, this.user.password).subscribe(
       (response) => {
+        console.log(response);
         if (response) {
-          localStorage.setItem('ingresado', 'true');
+          this.typeuser = response;
+          console.log(this.typeuser);
           this.showSpinner = true;
-          console.log(response);
-          this.docenteId = response.docente._id;
+          let setData: NavigationExtras = {
+            state: {
+              id: this.typeuser.id,
+              user: this.typeuser.user,
+              correo: this.typeuser.correo,
+              nombre: this.typeuser.nombre,
+              tipoPerfil: this.typeuser.tipoPerfil
+            }
+          };
           setTimeout(() => {
             this.showSpinner = false;
-            this.IrAlHome();
+            console.log(setData)
           }, 3000);
-        } 
+          if (this.typeuser.tipoPerfil === 1) {
+            this.auth.setAuthenticationStatus(true);
+            this.router.navigate(['/home-docente'], setData);
+          }
+
+        }
       },
       (error) => {
         this.showSpinner = true;
@@ -41,14 +64,11 @@ export class LoginDocentePage implements OnInit {
         setTimeout(() => {
           this.showSpinner = false;
           this.credencialesIncorrectas();
-        }, 3000); 
+        }, 3000);
       }
     );
   }
 
-  verificarCredenciales(response: any): boolean {
-    return response.nombre_usuario === this.user.nombre && response.password === this.user.password;
-  }
 
   // mensaje al usuario
   async credencialesIncorrectas() {
@@ -61,37 +81,9 @@ export class LoginDocentePage implements OnInit {
     await alert.present();
   }
 
-  bloquearBtn(): boolean {
-    return this.user.nombre.length < 3 || this.user.password.length != 4;
-  }
-
-  async IrAlHome() {
-
-    let navigationExtras: NavigationExtras = {
-      state: {
-        nombreUsuario: this.user.nombre,
-        docenteId: this.docenteId
-      }
-    }
-    this.router.navigate(['/home-docente'], navigationExtras);
-  }
 
   recovery() {
     this.router.navigate(['/recovery'])
-  }
-
-  validarUsername(user: string): string | null {
-    if (user.length < 3 || user.length > 8) {
-      return 'El nombre de usuario debe tener entre 3 y 8 caracteres.';
-    }
-    return null;
-  }
-
-  validarPassword(pass: string): string | null {
-    if (pass.length !== 4) {
-      return 'La contraseña debe tener 4 caracteres.';
-    }
-    return null;
   }
 
   togglePasswordVisibility() {

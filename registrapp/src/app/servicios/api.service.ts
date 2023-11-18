@@ -12,21 +12,22 @@ export class ApiService {
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*'
+      // 'Access-Control-Allow-Origin': '*'
     })
   }
 
 
   constructor(private http: HttpClient) { }
 
-  apiUrl = 'http://localhost:3000/api';
+  apiUrl = 'https://cqj33psb-3000.brs.devtunnels.ms/api';
 
   buscarUsuario(nombreUsuario: string, password: string): Observable<any> {
     return this.http.get(this.apiUrl + "/buscarUsuario" + '?nombre_usuario=' + nombreUsuario + '&password=' + password).pipe(retry(3))
   }
 
-  buscarDocente(nombreUsuario: string, password: string): Observable<any> {
-    return this.http.get(this.apiUrl + "/buscarDocente" + '?nombre_docente=' + nombreUsuario + '&password_docente=' + password).pipe(retry(3))
+  login(nombreUsuario: string, password: string): Observable<any> {
+    const body = { user: nombreUsuario, password: password };
+    return this.http.post(this.apiUrl + "/login", body, this.httpOptions).pipe(retry(3));
   }
 
   recovery(nombreUsuario: string): Observable<any> {

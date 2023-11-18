@@ -9,36 +9,30 @@ import { ApiService } from '../servicios/api.service';
 })
 export class HomeDocentePage implements OnInit {
 
+  idProfesor : any;
+  nombreUsuario: string = '';
+  cursos: any[] = [];
 
   public qrdata: String = '';
   value = '65557bc3f2aa3ad1a160776f'; //curso id
-  nombreUsuario: string = '';
-  docenteId: string = '';
+
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private apiService: ApiService) {
-    const navigation = this.router.getCurrentNavigation();
-    if (navigation && navigation.extras && navigation.extras.state) {
-      this.nombreUsuario = navigation.extras.state['nombreUsuario'];
-      this.docenteId = navigation.extras.state['docenteId'];
-    }
-  }
-
-  getCursos(){
-    this.apiService.getCursos(this.docenteId).subscribe(
-      (response) => {
-        if(response){
-          console.log(response);
-        }
-      },
-      (err) => {
-        console.log(err);
+    this.activatedRoute.queryParams.subscribe(params => {
+      if (this.router.getCurrentNavigation()?.extras.state) {
+        this.nombreUsuario = this.router.getCurrentNavigation()?.extras.state?.['user'];
+        this.idProfesor = this.router.getCurrentNavigation()?.extras.state?.['id'];
       }
-    )
-  }
+  });
 
-  ngOnInit(): void {
-    this.qrdata = this.value;
-    console.log(this.docenteId);
-    console.log(this.getCursos());
+
   }
+  ngOnInit(): void {
+    console.log(this.idProfesor);
+    this.apiService.getCursos(this.idProfesor).subscribe(data => {
+      this.cursos = data;
+      console.log(this.cursos);
+    });
+  }
+  
 }
