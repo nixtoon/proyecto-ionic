@@ -10,7 +10,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'login-docente',
+    redirectTo: 'inicio',
     pathMatch: 'full'
   },
   {
@@ -28,6 +28,14 @@ const routes: Routes = [
   {
     path: 'recovery',
     loadChildren: () => import('./recovery/recovery.module').then( m => m.RecoveryPageModule)
+  },
+  {
+    path: 'login-alumno',
+    loadChildren: () => import('./login-alumno/login-alumno.module').then( m => m.LoginAlumnoPageModule)
+  },
+  {
+    path: 'login-al',
+    loadChildren: () => import('./login-al/login-al.module').then( m => m.LoginAlPageModule)
   },
   {
     path: '**',

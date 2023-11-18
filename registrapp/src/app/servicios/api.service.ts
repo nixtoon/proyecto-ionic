@@ -21,13 +21,14 @@ export class ApiService {
 
   apiUrl = 'https://cqj33psb-3000.brs.devtunnels.ms/api';
 
-  buscarUsuario(nombreUsuario: string, password: string): Observable<any> {
-    return this.http.get(this.apiUrl + "/buscarUsuario" + '?nombre_usuario=' + nombreUsuario + '&password=' + password).pipe(retry(3))
+  loginAlumno(nombreUsuario: string, password: string): Observable<any> {
+    const body = { user: nombreUsuario, password: password };
+    return this.http.post(this.apiUrl + "/login-alumno", body, this.httpOptions).pipe(retry(3));
   }
 
-  login(nombreUsuario: string, password: string): Observable<any> {
+  loginDocente(nombreUsuario: string, password: string): Observable<any> {
     const body = { user: nombreUsuario, password: password };
-    return this.http.post(this.apiUrl + "/login", body, this.httpOptions).pipe(retry(3));
+    return this.http.post(this.apiUrl + "/login-profesor", body, this.httpOptions).pipe(retry(3));
   }
 
   recovery(nombreUsuario: string): Observable<any> {
@@ -38,8 +39,8 @@ export class ApiService {
     return this.http.post(this.apiUrl + "/registrar-asistencia", data, this.httpOptions).pipe(retry(3));
   }
 
-  getCursos(docenteId: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/buscar-cursos?docenteId=${docenteId}`);
+  getCursos(profesorId: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/cursos?profesorId=${profesorId}`);
   }
 
 }

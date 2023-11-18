@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { ApiService } from '../servicios/api.service';
+
 
 @Component({
   selector: 'app-home-docente',
@@ -17,22 +18,40 @@ export class HomeDocentePage implements OnInit {
   value = '65557bc3f2aa3ad1a160776f'; //curso id
 
 
-  constructor(private activatedRoute: ActivatedRoute, private router: Router, private apiService: ApiService) {
-    this.activatedRoute.queryParams.subscribe(params => {
-      if (this.router.getCurrentNavigation()?.extras.state) {
-        this.nombreUsuario = this.router.getCurrentNavigation()?.extras.state?.['user'];
-        this.idProfesor = this.router.getCurrentNavigation()?.extras.state?.['id'];
-      }
-  });
-
-
+  constructor(private router: Router, private apiService: ApiService) {
+    const navigation = this.router.getCurrentNavigation();
+    if (navigation && navigation.extras && navigation.extras.state) {
+      this.nombreUsuario = navigation.extras.state['nombre'];
+      this.idProfesor = navigation.extras.state['id'];
+    }
   }
+
+  verCursos(){
+    this.apiService.getCursos(this.idProfesor).subscribe(
+      (response) => {
+        console.log('Courses:', response.cursos);
+    }, (error) => {
+      console.log(error);
+    }
+    );
+  }
+
+  verDetalleCurso(cursoId: number) {
+    let setData: NavigationExtras = {
+      state: {
+        idProfesor: this.idProfesor,
+        idCurso : cursoId        
+      }
+    };
+    this.router.navigate(['/curso'],setData);
+}
+
+  
+  
+  
   ngOnInit(): void {
     console.log(this.idProfesor);
-    this.apiService.getCursos(this.idProfesor).subscribe(data => {
-      this.cursos = data;
-      console.log(this.cursos);
-    });
+    console.log(this.nombreUsuario);
   }
-  
+
 }

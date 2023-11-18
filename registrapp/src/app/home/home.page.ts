@@ -18,7 +18,7 @@ export class HomePage {
   constructor(private alertController: AlertController, private apiService: ApiService, private activatedRoute: ActivatedRoute, private router: Router) {
     const navigation = this.router.getCurrentNavigation();
     if (navigation && navigation.extras && navigation.extras.state) {
-      this.nombreUsuario = navigation.extras.state['nombreUsuario'];
+      this.nombreUsuario = navigation.extras.state['nombre'];
     }
   }
 

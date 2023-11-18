@@ -6,11 +6,12 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { GuardGuard } from '../guard/guard.guard';
 
 @Component({
-  selector: 'app-login-docente',
-  templateUrl: './login-docente.page.html',
-  styleUrls: ['./login-docente.page.scss'],
+  selector: 'app-login-al',
+  templateUrl: './login-al.page.html',
+  styleUrls: ['./login-al.page.scss'],
 })
-export class LoginDocentePage implements OnInit {
+export class LoginAlPage implements OnInit {
+
 
   hide = true;
   user = {
@@ -20,7 +21,6 @@ export class LoginDocentePage implements OnInit {
   showSpinner: boolean = false;
 
   constructor(private apiService: ApiService, private router: Router, private alertController: AlertController, private auth: GuardGuard) { }
-
   usuario = new FormGroup({
     user: new FormControl('',[Validators.required, Validators.minLength(4),Validators.maxLength(20)]),
     pass: new FormControl('',[Validators.required, Validators.minLength(4),Validators.maxLength(20)]),
@@ -28,7 +28,7 @@ export class LoginDocentePage implements OnInit {
 
   login() {
 
-    this.apiService.loginDocente(this.user.nombre, this.user.password).subscribe(
+    this.apiService.loginAlumno(this.user.nombre, this.user.password).subscribe(
       (response) => {
         console.log(response);
         if (response) {
@@ -46,7 +46,7 @@ export class LoginDocentePage implements OnInit {
             this.showSpinner = false;
             console.log(setData)
             this.auth.setAuthenticationStatus(true);
-            this.router.navigate(['/home-docente'], setData);
+            this.router.navigate(['/home'], setData);
           }, 3000);
         }
       },
@@ -61,30 +61,31 @@ export class LoginDocentePage implements OnInit {
     );
   }
 
+    // mensaje al usuario
+    async credencialesIncorrectas() {
+      const alert = await this.alertController.create({
+        header: 'Error',
+        message: 'Nombre de usuario o contraseña incorrectos',
+        buttons: ['OK']
+      });
+  
+      await alert.present();
+    }
+  
+  
+    recovery() {
+      this.router.navigate(['/recovery'])
+    }
+  
+    togglePasswordVisibility() {
+      this.hide = !this.hide;
+    }
+  
 
-  // mensaje al usuario
-  async credencialesIncorrectas() {
-    const alert = await this.alertController.create({
-      header: 'Error',
-      message: 'Nombre de usuario o contraseña incorrectos',
-      buttons: ['OK']
-    });
 
-    await alert.present();
-  }
-
-
-  recovery() {
-    this.router.navigate(['/recovery'])
-  }
-
-  togglePasswordVisibility() {
-    this.hide = !this.hide;
-  }
 
 
   ngOnInit() {
   }
-
 
 }
