@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BarcodeScanner, BarcodeFormat } from '@capacitor-mlkit/barcode-scanning';
 import { AlertController } from '@ionic/angular';
 import { ApiService } from '../servicios/api.service';
@@ -9,17 +9,23 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit{
 
   barcodes = [];
-  scannedData: string = '';
+  idCurso: string = '';
+  idAlumno: string = '';
   nombreUsuario: string = '';
 
   constructor(private alertController: AlertController, private apiService: ApiService, private activatedRoute: ActivatedRoute, private router: Router) {
     const navigation = this.router.getCurrentNavigation();
     if (navigation && navigation.extras && navigation.extras.state) {
+      this.idAlumno = navigation.extras.state['_id'];
       this.nombreUsuario = navigation.extras.state['nombre'];
     }
+  }
+  ngOnInit(): void {
+    console.log(this.idAlumno);
+    console.log(this.idCurso);
   }
 
   // funcion para escanear QR
@@ -32,8 +38,8 @@ export class HomePage {
       if (barcodes && barcodes.length > 0) {
         // Iterar sobre los códigos de barras  
         for (let barcode of barcodes) {
-          this.scannedData = barcode.rawValue;
-          console.log('Datos escaneados:', this.scannedData);
+          this.idCurso = barcode.rawValue;
+          console.log('Datos escaneados:', this.idCurso);
           this.showScanResultAlert();
         }
       } else {
@@ -41,7 +47,6 @@ export class HomePage {
       }
     } catch (error) {
       console.error('Error durante el escaneo', error);
-      // Mostrar el mensaje de error en la consola
       if (error instanceof Error) {
         console.error(error.message);
       } else {
@@ -83,22 +88,40 @@ export class HomePage {
     await alert.present();
   }
 
+  // registro de asistencia en la BD
   registroAsistencia() {
-    if (this.scannedData == '') {
+    if (!this.idCurso) {
       this.noData();
-    } else {
-      var data = {
-        curso: this.scannedData,
-        presente: true,
-      }
-      this.apiService.registrarAsistencia(data).subscribe((success) => {
-        console.log(success);
-        this.registroExitoso();
-      }, error => {
-        console.log(error);
-      })
+      return;
     }
-    
+  
+    const data = {
+      alumno: this.idAlumno,
+      curso: this.idCurso,
+      presente: true,
+    };
+  
+    console.log('Data:', data);
+  
+    this.apiService.registrarAsistencia(data).subscribe(
+      (success) => {
+        console.log('Success:', success);
+        this.registroExitoso();
+        this.router.navigate(['/inicio']);
+      },
+      (error) => {
+        console.error('Error:', error);
+  
+        // Manejar errores específicos
+        if (error.status === 404) {
+          console.log('Alumno o curso no encontrado.');
+        } else if (error.status === 400) {
+          console.log('Error de validación al registrar la asistencia.');
+        } else {
+          console.log('Error al registrar la asistencia.');
+        }
+      }
+    );
   }
 
 }

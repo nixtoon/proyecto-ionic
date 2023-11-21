@@ -36,10 +36,10 @@ export class LoginDocentePage implements OnInit {
           this.showSpinner = true;
           let setData: NavigationExtras = {
             state: {
-              id: response.usuario.id,
+              _id: response.usuario._id,
               nombre: response.usuario.nombre,
               user: response.usuario.user,
-              correo: response.usuario.correo,
+              correo: response.usuario.correo
             }
           };
           setTimeout(() => {

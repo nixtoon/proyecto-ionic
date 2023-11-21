@@ -35,7 +35,7 @@ export class ApiService {
     return this.http.get(this.apiUrl + "/recovery" + '?nombre_usuario=' + nombreUsuario).pipe(retry(3))
   }
 
-  registrarAsistencia(data: { curso: string; presente: boolean; }): Observable<any> {
+  registrarAsistencia(data: { alumno: string, curso: string; presente: boolean; }): Observable<any> {
     return this.http.post(this.apiUrl + "/registrar-asistencia", data, this.httpOptions).pipe(retry(3));
   }
 

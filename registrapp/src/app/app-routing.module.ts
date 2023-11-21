@@ -38,6 +38,10 @@ const routes: Routes = [
     loadChildren: () => import('./login-al/login-al.module').then( m => m.LoginAlPageModule)
   },
   {
+    path: 'curso',
+    loadChildren: () => import('./curso/curso.module').then( m => m.CursoPageModule)
+  },
+  {
     path: '**',
     loadChildren: () => import('./not-found/not-found.module').then( m => m.NotFoundPageModule)
   },
