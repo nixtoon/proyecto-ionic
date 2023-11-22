@@ -22,7 +22,7 @@ export class GuardGuard implements CanActivate {
       if (this.isAuthenticated) {
         return true; // Usuario autenticado, permitir el acceso.
       } else {
-        return this.router.navigate(['/login-docente']);
+        return this.router.navigate(['/inicio']);
       }
   }
   
