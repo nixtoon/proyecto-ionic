@@ -70,5 +70,13 @@
     margin-bottom: -10px; /* Ajusta este valor según tus necesidades */
   }
 
+  #container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url('../../assets/img/login-alumno2.jpg')no-repeat center ;
+    background-size: cover;
+    height: 100vh;
 
+}
   

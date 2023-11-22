@@ -1,0 +1,28 @@
+#container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  ion-card {
+    max-width: 400px;
+    width: 100%;
+  }
+  
+  .full-width {
+    width: 100%;
+  }
+  
+  .mat-form-field {
+    margin-bottom: 15px;
+  }
+  
+  .ion-text-center {
+    display: flex;
+    justify-content: center;
+  }
+  
+
+  .rounded-button {
+    width: 100%; 
+  }
