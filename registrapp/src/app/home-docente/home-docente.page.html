@@ -30,7 +30,9 @@
         <h3>Código: {{ curso.codigo }}</h3>
         <h3>Sección: {{ curso.seccion }}</h3>
       </ion-label>
-      <ion-button fill="outline" slot="end" (click)="irDetalleCurso(curso._id)">Ver Detalle</ion-button>
+      <ion-fab-button (click)="irDetalleCurso(curso._id)">
+        <ion-icon name="qr-code-outline" >Ver Detalle</ion-icon>
+      </ion-fab-button>
     </ion-item>
   </ion-list>
 

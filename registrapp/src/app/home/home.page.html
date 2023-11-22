@@ -2,7 +2,7 @@
   <ion-toolbar>
     <img alt="logo" width="100%" src="/assets/img/registrApp logo.png" />
   </ion-toolbar>
-</ion-header> 
+</ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
@@ -20,15 +20,15 @@
       <ion-card-subtitle>
         Bienvenido {{ nombreUsuario }}!
       </ion-card-subtitle>
+      <ion-avatar>
+        <img alt="avatar" src="../../assets/img/foto-perfil-general.jpg" />
+      </ion-avatar>
     </ion-card-header>
     <ion-card-content>
       <ion-grid>
         <ion-row>
           <ion-col>
             <ion-button (click)="registroAsistencia()">Registra tu asistencia</ion-button>
-          </ion-col>
-          <ion-col>
-            <ion-button [routerLink]="'/inicio'">Volver</ion-button>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -37,8 +37,8 @@
 
 
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button (click)="scan()" >
-      <ion-icon name="qr-code-outline"></ion-icon>
+    <ion-fab-button (click)="scan()">
+      <ion-icon name="scan"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 </ion-content>

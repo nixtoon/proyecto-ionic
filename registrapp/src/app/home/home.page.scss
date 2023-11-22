@@ -1,0 +1,60 @@
+
+ion-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    --background: url('../../assets/img/login-alumno3.jpg')no-repeat center center fixed ;
+  }
+  
+  ion-toolbar img {
+    width: 100%;
+  }
+  
+  ion-card img {
+    width: 30%;
+  }
+  
+  ion-card {
+    text-align: left;
+    border-radius: 10px;
+    width: 95%;
+    margin: 30px auto 10px; 
+  }
+  
+  ion-list {
+    text-align: center;
+    border-radius: 10px;
+    width: 95%;
+    margin: 30px auto 10px; 
+    background-color: rgba(255, 255, 255, 0);
+  }
+
+  
+  ion-item {
+    text-align: left;
+    border-radius: 10px;
+    width: 98%;
+    margin: 10px auto 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    margin-bottom: 10px;
+  }
+  
+  ion-button {
+    margin-top: 40px;
+    display: block;
+    margin: 30px auto 10px; 
+    width: 100%;
+  }
+  
+  
+  ion-avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 90%;
+    width: 100%; /* Ajusta el tamaño según sea necesario */
+    height: 100%; /* Ajusta el tamaño según sea necesario */
+    object-fit: cover;
+  }
