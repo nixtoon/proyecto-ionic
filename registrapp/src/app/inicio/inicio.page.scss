@@ -1,82 +1,85 @@
 .ion-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
-  .ion-grid {
-    height: 100%;
-  }
-  
-  .ion-row {
-    height: 100%;
-  }
-  
-  .ion-col {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.ion-grid {
+  height: 100%;
+}
+
+.ion-row {
+  height: 100%;
+}
+
+.ion-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
 .image-container {
-    position: relative;
-    width: 200vw;
-    max-width: 400px; 
-    cursor: pointer;
-    overflow: hidden;
-    margin-top: 0px;
-    object-fit: fill;
-    margin: 0 auto;
-    transition: transform 0.2s ease;
-  }
+  position: relative;
+  width: 200vw;
+  max-width: 400px; 
+  overflow: hidden;
+  margin-top: 0px;
+  object-fit: fill;
+  margin: 0 auto;
+  transition: transform 0.2s ease;
+  border-radius: 5%;
+  align-items: center;
+}
 
 .image-container:active {
-    transform: scale(0.95);
-  }
-  
-
-  img {
-    width: 100%;
-    height: auto;
-    object-fit: fill;
-  }
-  
-  .back-img {
-    filter: brightness(0.6);
-  }
-
-  .texto-superpuesto {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-align: center;
-  }
-
-  ion-content::part(scroll-content) {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-
-  image-container:nth-child(2) {
-    margin-bottom: -10px; /* Ajusta este valor según tus necesidades */
-  }
-
-  #container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: url('../../assets/img/login-alumno2.jpg')no-repeat center ;
-    background-size: cover;
-    height: 100vh;
-
+  transform: scale(0.95);
 }
-  
+
+img {
+  width: 100%;
+  height: auto;
+  object-fit: fill;
+}
+
+.back-img {
+  filter: brightness(0.6);
+}
+
+.texto-superpuesto {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+ion-content::part(scroll-content) {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-container:nth-child(2) {
+  margin-bottom: -10px; /* Ajusta este valor según tus necesidades */
+}
+
+#container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-size: cover;
+  height: 100vh;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra los botones horizontalmente */
+}

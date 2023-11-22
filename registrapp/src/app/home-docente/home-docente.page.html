@@ -20,6 +20,12 @@
       <ion-card-subtitle>
         Bienvenido {{ nombreUsuario }}!
       </ion-card-subtitle>
+      <ion-avatar>
+        <img alt="avatar" src="../../assets/img/foto-perfil-general.jpg" />
+      </ion-avatar>
+      <ion-card-title class="center">
+        {{ nombreUsuario }}
+      </ion-card-title>
     </ion-card-header>
   </ion-card>
 
@@ -36,5 +42,5 @@
     </ion-item>
   </ion-list>
 
-  <ion-button [routerLink]="'/inicio'">Volver</ion-button>
+  <ion-button [routerLink]="'/inicio'">Cerrar Sesion</ion-button>
 </ion-content>

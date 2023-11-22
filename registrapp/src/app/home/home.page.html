@@ -23,6 +23,9 @@
       <ion-avatar>
         <img alt="avatar" src="../../assets/img/foto-perfil-general.jpg" />
       </ion-avatar>
+      <ion-card-title class="center">
+        {{ nombreUsuario }}
+      </ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-grid>
@@ -41,4 +44,6 @@
       <ion-icon name="scan"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+
+  <ion-button class="log-out" [routerLink]="'/inicio'">Cerrar Sesion</ion-button>
 </ion-content>
