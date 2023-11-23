@@ -12,9 +12,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class HomePage implements OnInit{
 
   barcodes = [];
-  idCurso: string = '';
+  datoEscaneado: string = '';
   idAlumno: string = '';
   nombreUsuario: string = '';
+
+  idCurso: string = '';
+  nombreCurso: string = '';
+  seccionCurso: string = '';
+  codigoCurso: string = '';
 
   constructor(private alertController: AlertController, private apiService: ApiService, private activatedRoute: ActivatedRoute, private router: Router) {
     const navigation = this.router.getCurrentNavigation();
@@ -25,7 +30,7 @@ export class HomePage implements OnInit{
   }
   ngOnInit(): void {
     console.log(this.idAlumno);
-    console.log(this.idCurso);
+    console.log(this.datoEscaneado);
   }
 
   // funcion para escanear QR
@@ -39,10 +44,11 @@ export class HomePage implements OnInit{
       if (barcodes && barcodes.length > 0) {
         // Iterar sobre los códigos de barras  
         for (let barcode of barcodes) {
-          this.idCurso = barcode.rawValue;
-          console.log('Datos escaneados:', this.idCurso);
+          this.datoEscaneado = barcode.rawValue;
+          console.log('Datos escaneados:', this.datoEscaneado);
           this.showScanResultAlert();
-        }
+          this.separarDatos(this.datoEscaneado);
+        }     
       } else {
         this.barcodes = [];
       }
@@ -129,6 +135,25 @@ export class HomePage implements OnInit{
         }
       }
     );
+  }
+
+  separarDatos(cadena: string) {
+    const indices = [];
+    let currentIndex = cadena.indexOf(';');
+  
+    while (currentIndex !== -1) {
+      indices.push(currentIndex);
+      currentIndex = cadena.indexOf(';', currentIndex + 1);
+    }
+  
+    if (indices.length === 3) {
+      this.idCurso = cadena.substring(0, indices[0]);
+      this.nombreCurso = cadena.substring(indices[0] + 1, indices[1]);
+      this.codigoCurso = cadena.substring(indices[1] + 1, indices[2]);
+      this.seccionCurso = cadena.substring(indices[2] + 1);
+    } else {
+      console.error('Número incorrecto de puntos y comas en la cadena.');
+    }
   }
 
 }

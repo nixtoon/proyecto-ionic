@@ -43,4 +43,8 @@ export class ApiService {
     return this.http.get(`${this.apiUrl}/cursos?profesorId=${profesorId}`);
   }
 
+  detalleCurso(cursoId: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/detalle-curso?cursoId=${cursoId}`);
+  }
+
 }
