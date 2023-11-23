@@ -31,7 +31,7 @@ export class HomePage implements OnInit{
   // funcion para escanear QR
   async scan(): Promise<void> {
     try {
-      this.installGoogleBarcodeScanner()
+      this.installGoogleBarcodeScannerModule()
       const { barcodes } = await BarcodeScanner.scan({
         formats: [BarcodeFormat.QrCode],
       });
@@ -90,11 +90,10 @@ export class HomePage implements OnInit{
   }
 
   // dependencia de google
-  installGoogleBarcodeScanner(){
-    const installGoogleBarcodeScannerModule = async () => {
-      await BarcodeScanner.installGoogleBarcodeScannerModule();
-    };
+  public async installGoogleBarcodeScannerModule() {
+    await BarcodeScanner.installGoogleBarcodeScannerModule();
   }
+
 
   // registro de asistencia en la BD
   registroAsistencia() {
