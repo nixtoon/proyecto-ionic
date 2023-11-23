@@ -21,6 +21,8 @@ export class HomePage implements OnInit{
   seccionCurso: string = '';
   codigoCurso: string = '';
 
+  correo: string = '';
+
   constructor(private alertController: AlertController, private apiService: ApiService, private activatedRoute: ActivatedRoute, private router: Router) {
     const navigation = this.router.getCurrentNavigation();
     if (navigation && navigation.extras && navigation.extras.state) {
@@ -121,6 +123,7 @@ export class HomePage implements OnInit{
         console.log('Success:', success);
         this.registroExitoso();
         this.router.navigate(['/inicio']);
+        this.enviarCorreo();
       },
       (error) => {
         console.error('Error:', error);
@@ -146,14 +149,23 @@ export class HomePage implements OnInit{
       currentIndex = cadena.indexOf(';', currentIndex + 1);
     }
   
-    if (indices.length === 3) {
+    if (indices.length === 4) {
       this.idCurso = cadena.substring(0, indices[0]);
       this.nombreCurso = cadena.substring(indices[0] + 1, indices[1]);
       this.codigoCurso = cadena.substring(indices[1] + 1, indices[2]);
-      this.seccionCurso = cadena.substring(indices[2] + 1);
+      this.seccionCurso = cadena.substring(indices[2] + 1, indices[3]);
+      this.correo = cadena.substring(indices[3] + 1);
     } else {
       console.error('Número incorrecto de puntos y comas en la cadena.');
     }
+  }
+
+  enviarCorreo() {
+    var destinatario = this.correo;
+    var asunto = 'Registro de Asistencia ' + this.nombreCurso + ' ' + this.codigoCurso + ' ' + this.seccionCurso;
+    var cuerpo = 'Registro de Asistencia Exitoso';
+  
+    window.location.href = 'mailto:' + destinatario + '?subject=' + encodeURIComponent(asunto) + '&body=' + encodeURIComponent(cuerpo);
   }
 
 }

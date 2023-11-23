@@ -10,19 +10,19 @@ import { ApiService } from '../servicios/api.service';
 })
 export class CursoPage implements OnInit {
 
-  profesorId: string='';
   cursoId: string='';
   public qrdata: String = '';
+  correo: string = '';
 
     // variables curso
     nombreCurso: string = '';
     codigoCurso: string = '';
     seccionCurso: string = '';
-    profesorCurso: string = '';
 
   constructor(private router: Router, private apiService: ApiService) { 
     if (this.router.getCurrentNavigation()?.extras.state) {
       this.cursoId = this.router.getCurrentNavigation()?.extras.state?.['idCurso'];
+      this.correo = this.router.getCurrentNavigation()?.extras.state?.['correo'];
     }
   }
 
@@ -33,8 +33,7 @@ export class CursoPage implements OnInit {
         this.nombreCurso = response.curso.nombre;
         this.codigoCurso = response.curso.codigo;
         this.seccionCurso = response.curso.seccion;
-        this.profesorCurso = response.curso.profesor;
-        this.qrdata = this.cursoId + ';' + this.nombreCurso + ';' + this.codigoCurso + ';' + this.seccionCurso;
+        this.qrdata = this.cursoId + ';' + this.nombreCurso + ';' + this.codigoCurso + ';' + this.seccionCurso + ';' + this.correo;
       },(error) => {
         console.log(error)
       }

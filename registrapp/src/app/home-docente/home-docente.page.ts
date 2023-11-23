@@ -31,6 +31,7 @@ export class HomeDocentePage implements OnInit {
     let setData: NavigationExtras = {
       state: {
         idCurso : cursoId,  
+        correo: this.correo,
       }
     };
     this.router.navigate(['/curso'],setData);
