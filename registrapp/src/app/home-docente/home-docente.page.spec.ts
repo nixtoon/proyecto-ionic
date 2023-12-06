@@ -1,17 +1,28 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { HomeDocentePage } from './home-docente.page';
+import { ApiService } from '../servicios/api.service';
+import { Router } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { IonicModule } from '@ionic/angular';
 
-describe('HomeDocentePage', () => {
-  let component: HomeDocentePage;
-  let fixture: ComponentFixture<HomeDocentePage>;
-
-  beforeEach(async(() => {
-    fixture = TestBed.createComponent(HomeDocentePage);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+describe('Home Docente', () => {
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [HomeDocentePage],
+      providers: [
+        ApiService,
+        Router
+      ],
+      imports: [
+        HttpClientModule,
+        IonicModule
+      ]
+    }).compileComponents();
   }));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+  it('Existencia de la pagina', () => {
+    const fixture = TestBed.createComponent(HomeDocentePage);
+    const app = fixture.componentInstance;
+    expect(app).toBeTruthy();
+  })
 });

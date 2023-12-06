@@ -1,17 +1,28 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RecoveryPage } from './recovery.page';
+import { ApiService } from '../servicios/api.service';
+import { Router } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { IonicModule } from '@ionic/angular';
 
-describe('RecoveryPage', () => {
-  let component: RecoveryPage;
-  let fixture: ComponentFixture<RecoveryPage>;
-
-  beforeEach(async(() => {
-    fixture = TestBed.createComponent(RecoveryPage);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+describe('Recuperar Password', () => {
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [RecoveryPage],
+      providers: [
+        ApiService,
+        Router
+      ],
+      imports: [
+        HttpClientModule,
+        IonicModule
+      ]
+    }).compileComponents();
   }));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+  it('Existencia de la pagina', () => {
+    const fixture = TestBed.createComponent(RecoveryPage);
+    const app = fixture.componentInstance;
+    expect(app).toBeTruthy();
+  })
 });

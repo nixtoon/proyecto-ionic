@@ -2,16 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { ApiService } from '../servicios/api.service';
 import { AlertController } from '@ionic/angular';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { GuardGuard } from '../guard/guard.guard';
 
 @Component({
-  selector: 'app-login-alumno',
-  templateUrl: './login-alumno.page.html',
-  styleUrls: ['./login-alumno.page.scss'],
+  selector: 'app-iniciar-sesion',
+  templateUrl: './iniciar-sesion.page.html',
+  styleUrls: ['./iniciar-sesion.page.scss'],
 })
-export class LoginAlumnoPage implements OnInit {
-  
+export class IniciarSesionPage implements OnInit {
+
   hide = true;
   user = {
     nombre: '',
@@ -21,18 +20,12 @@ export class LoginAlumnoPage implements OnInit {
 
   constructor(private apiService: ApiService, private router: Router, private alertController: AlertController, private auth: GuardGuard) { }
 
-  usuario = new FormGroup({
-    user: new FormControl('',[Validators.required, Validators.minLength(4),Validators.maxLength(20)]),
-    pass: new FormControl('',[Validators.required, Validators.minLength(4),Validators.maxLength(20)]),
-  });
-
   login() {
 
-    this.apiService.loginAlumno(this.user.nombre, this.user.password).subscribe(
+    this.apiService.login(this.user.nombre, this.user.password).subscribe(
       (response) => {
         console.log(response);
         if (response) {
-          console.log(response);
           this.showSpinner = true;
           let setData: NavigationExtras = {
             state: {
@@ -40,14 +33,21 @@ export class LoginAlumnoPage implements OnInit {
               nombre: response.usuario.nombre,
               user: response.usuario.user,
               correo: response.usuario.correo,
+              perfil: response.usuario.perfil
             }
           };
           setTimeout(() => {
             this.showSpinner = false;
             console.log(setData)
+          }, 3000);
+          if(response.usuario.perfil == 1){
+            this.auth.setAuthenticationStatus(true);
+            this.router.navigate(['/home-docente'], setData);
+          }
+          if(response.usuario.perfil == 2){
             this.auth.setAuthenticationStatus(true);
             this.router.navigate(['/home'], setData);
-          }, 3000);
+          }
         }
       },
       (error) => {
@@ -61,31 +61,27 @@ export class LoginAlumnoPage implements OnInit {
     );
   }
 
-    // mensaje al usuario
-    async credencialesIncorrectas() {
-      const alert = await this.alertController.create({
-        header: 'Error',
-        message: 'Nombre de usuario o contraseña incorrectos',
-        buttons: ['OK']
-      });
-  
-      await alert.present();
-    }
-  
-  
-    recovery() {
-      this.router.navigate(['/recovery'])
-    }
-  
-    togglePasswordVisibility() {
-      this.hide = !this.hide;
-    }
-  
+   // mensaje al usuario
+   async credencialesIncorrectas() {
+    const alert = await this.alertController.create({
+      header: 'Error',
+      message: 'Nombre de usuario o contraseña incorrectos',
+      buttons: ['OK']
+    });
 
+    await alert.present();
+  }
 
+  recovery() {
+    this.router.navigate(['/recovery'])
+  }
 
+  togglePasswordVisibility() {
+    this.hide = !this.hide;
+  }
 
   ngOnInit() {
   }
 
 }
+

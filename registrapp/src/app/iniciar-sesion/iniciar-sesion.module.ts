@@ -4,10 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { LoginAlPageRoutingModule } from './login-al-routing.module';
+import { IniciarSesionPageRoutingModule } from './iniciar-sesion-routing.module';
 
-import { LoginAlPage } from './login-al.page';
-
+import { IniciarSesionPage } from './iniciar-sesion.page';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -17,11 +16,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     CommonModule,
     FormsModule,
     IonicModule,
-    LoginAlPageRoutingModule,
+    IniciarSesionPageRoutingModule,
     MatInputModule,
     MatIconModule,
-    MatProgressSpinnerModule,
+    MatProgressSpinnerModule
   ],
-  declarations: [LoginAlPage]
+  declarations: [IniciarSesionPage]
 })
-export class LoginAlPageModule {}
+export class IniciarSesionPageModule {}

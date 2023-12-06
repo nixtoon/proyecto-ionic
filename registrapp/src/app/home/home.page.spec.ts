@@ -1,24 +1,42 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
+import { HomePage } from './home.page';
+import { ApiService } from '../servicios/api.service';
+import { BarcodeScanner } from '@capacitor-mlkit/barcode-scanning';
+import { AlertController } from '@ionic/angular';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 import { IonicModule } from '@ionic/angular';
 
-import { HomePage } from './home.page';
-
-describe('HomePage', () => {
-  let component: HomePage;
-  let fixture: ComponentFixture<HomePage>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+describe('Home alumno', () => {
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
       declarations: [HomePage],
-      imports: [IonicModule.forRoot()]
+      providers: [
+        ApiService,
+        BarcodeScanner,
+        AlertController,
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: {
+              paramMap: {
+                get: () => 'dummyId' 
+              }
+            }
+          }
+        },
+        Router
+      ],
+      imports: [
+        HttpClientModule,
+        IonicModule
+      ]
     }).compileComponents();
+  }));
 
-    fixture = TestBed.createComponent(HomePage);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+  it('Existencia de la pagina', () => {
+    const fixture = TestBed.createComponent(HomePage);
+    const app = fixture.componentInstance;
+    expect(app).toBeTruthy();
+  })
 });

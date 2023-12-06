@@ -10,36 +10,24 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'inicio',
+    redirectTo: 'iniciar-sesion',
     pathMatch: 'full'
-  },
-  {
-    path: 'login-docente',
-    loadChildren: () => import('./login-docente/login-docente.module').then( m => m.LoginDocentePageModule)
   },
   {
     path: 'home-docente',
     loadChildren: () => import('./home-docente/home-docente.module').then( m => m.HomeDocentePageModule)
   },
   {
-    path: 'inicio',
-    loadChildren: () => import('./inicio/inicio.module').then( m => m.InicioPageModule)
-  },
-  {
     path: 'recovery',
     loadChildren: () => import('./recovery/recovery.module').then( m => m.RecoveryPageModule)
   },
   {
-    path: 'login-alumno',
-    loadChildren: () => import('./login-alumno/login-alumno.module').then( m => m.LoginAlumnoPageModule)
-  },
-  {
-    path: 'login-al',
-    loadChildren: () => import('./login-al/login-al.module').then( m => m.LoginAlPageModule)
-  },
-  {
     path: 'curso',
     loadChildren: () => import('./curso/curso.module').then( m => m.CursoPageModule)
+  },
+  {
+    path: 'iniciar-sesion',
+    loadChildren: () => import('./iniciar-sesion/iniciar-sesion.module').then( m => m.IniciarSesionPageModule)
   },
   {
     path: '**',
