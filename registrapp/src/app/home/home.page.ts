@@ -111,8 +111,12 @@ export class HomePage implements OnInit{
     }
   
     const data = {
-      alumno: this.idAlumno,
-      curso: this.idCurso,
+      idAlumno: this.idAlumno,
+      nombreAlumno: this.nombreUsuario,
+      idCurso: this.idCurso,
+      nombreCurso: this.nombreCurso,
+      codigoCurso: this.codigoCurso,
+      seccionCurso: this.seccionCurso,
       presente: true,
     };
   
@@ -163,7 +167,7 @@ export class HomePage implements OnInit{
   enviarCorreo() {
     var destinatario = this.correo;
     var asunto = 'Registro de Asistencia ' + this.nombreCurso + ' ' + this.codigoCurso + ' ' + this.seccionCurso;
-    var cuerpo = 'Registro de Asistencia Exitoso';
+    var cuerpo = 'Registro de Asistencia Exitoso ' + this.nombreUsuario;
   
     window.location.href = 'mailto:' + destinatario + '?subject=' + encodeURIComponent(asunto) + '&body=' + encodeURIComponent(cuerpo);
   }

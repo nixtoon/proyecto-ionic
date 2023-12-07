@@ -39,15 +39,15 @@ export class IniciarSesionPage implements OnInit {
           setTimeout(() => {
             this.showSpinner = false;
             console.log(setData)
+            if (response.usuario.perfil == 1) {
+              this.auth.setAuthenticationStatus(true);
+              this.router.navigate(['/home-docente'], setData);
+            }
+            if (response.usuario.perfil == 2) {
+              this.auth.setAuthenticationStatus(true);
+              this.router.navigate(['/home'], setData);
+            }
           }, 3000);
-          if(response.usuario.perfil == 1){
-            this.auth.setAuthenticationStatus(true);
-            this.router.navigate(['/home-docente'], setData);
-          }
-          if(response.usuario.perfil == 2){
-            this.auth.setAuthenticationStatus(true);
-            this.router.navigate(['/home'], setData);
-          }
         }
       },
       (error) => {
@@ -61,8 +61,8 @@ export class IniciarSesionPage implements OnInit {
     );
   }
 
-   // mensaje al usuario
-   async credencialesIncorrectas() {
+  // mensaje al usuario
+  async credencialesIncorrectas() {
     const alert = await this.alertController.create({
       header: 'Error',
       message: 'Nombre de usuario o contraseña incorrectos',
