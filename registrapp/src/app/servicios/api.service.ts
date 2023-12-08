@@ -26,8 +26,9 @@ export class ApiService {
     return this.http.post(this.apiUrl + "/login", body, this.httpOptions).pipe(retry(3));
   }
 
-  recovery(nombreUsuario: string): Observable<any> {
-    return this.http.get(this.apiUrl + "/recovery" + '?nombre_usuario=' + nombreUsuario).pipe(retry(3))
+  recovery(correo: string): Observable<any> {
+    const body = { correo: correo };
+    return this.http.post(this.apiUrl + "/recovery", body, this.httpOptions).pipe(retry(3));
   }
 
   registrarAsistencia(data: { idAlumno: string, nombreAlumno: string, idCurso: string, nombreCurso: string, codigoCurso: string, seccionCurso: string, presente: boolean }): Observable<any> {

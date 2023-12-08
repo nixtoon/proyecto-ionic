@@ -10,19 +10,20 @@ import { ApiService } from '../servicios/api.service';
 export class RecoveryPage implements OnInit {
 
 
-  nomUsuario = { texto: '' }
+  correo: string = '';
   showSpinner: boolean = false; // Variable para controlar la visibilidad del spinner
   mensaje: string = ''; // Variable para el mensaje
 
   constructor(private router: Router, private apiService: ApiService) { }
+
   enviarSolicitud() {
-    this.apiService.recovery(this.nomUsuario.texto).subscribe(
+
+    this.apiService.recovery(this.correo).subscribe(
       (response) => {
         console.log(response);
         if (response) {
-          // Activa el spinner
           this.showSpinner = true;
-          this.mensaje = 'Solicitud enviada con éxito. Redirigiendo...'; // Establece el mensaje
+          this.mensaje = 'Solicitud enviada con éxito. Redirigiendo...'; 
 
           // Simula un retraso de 3 segundos
           setTimeout(() => {
@@ -30,10 +31,11 @@ export class RecoveryPage implements OnInit {
             this.showSpinner = false;
             this.mensaje = ''; // Limpia el mensaje
             // Redirige a la página de inicio de sesión (login)
-            this.router.navigate(['/login-alumno']);
+            this.router.navigate(['/iniciar-sesion']);
           }, 3000);
+
         } else {
-          this.mensaje = 'Hubo un error al enviar la solicitud. Inténtalo de nuevo.';
+          this.mensaje = 'Error'       
         }
       });
   }
