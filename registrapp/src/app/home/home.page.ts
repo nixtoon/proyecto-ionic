@@ -126,7 +126,7 @@ export class HomePage implements OnInit{
       (success) => {
         console.log('Success:', success);
         this.registroExitoso();
-        this.router.navigate(['/inicio']);
+        this.router.navigate(['/iniciar-sesion']);
         this.enviarCorreo();
       },
       (error) => {
@@ -167,7 +167,7 @@ export class HomePage implements OnInit{
   enviarCorreo() {
     var destinatario = this.correo;
     var asunto = 'Registro de Asistencia ' + this.nombreCurso + ' ' + this.codigoCurso + ' ' + this.seccionCurso;
-    var cuerpo = 'Registro de Asistencia Exitoso ' + this.nombreUsuario;
+    var cuerpo = 'Registro de Asistencia Exitoso de ' + this.nombreUsuario;
   
     window.location.href = 'mailto:' + destinatario + '?subject=' + encodeURIComponent(asunto) + '&body=' + encodeURIComponent(cuerpo);
   }
