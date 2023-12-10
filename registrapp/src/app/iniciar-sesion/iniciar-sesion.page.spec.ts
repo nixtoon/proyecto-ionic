@@ -3,19 +3,21 @@ import { IniciarSesionPage } from './iniciar-sesion.page';
 import { ApiService } from '../servicios/api.service';
 import { AlertController, IonicModule } from '@ionic/angular';
 import { GuardGuard } from '../guard/guard.guard';
-import { Router } from '@angular/router';
+import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { of } from 'rxjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
 
 describe('Iniciar Sesión', () => {
   let component: IniciarSesionPage;
   let fixture: ComponentFixture<IniciarSesionPage>;
   let apiServiceSpy: jasmine.SpyObj<ApiService>;
   let routerSpy: jasmine.SpyObj<Router>;
+  let activatedRoute: ActivatedRoute; 
 
   beforeEach(waitForAsync(() => {
     const apiSpy = jasmine.createSpyObj('ApiService', ['login']);
@@ -24,9 +26,11 @@ describe('Iniciar Sesión', () => {
       declarations: [IniciarSesionPage],
       providers: [
         { provide: ApiService, useValue: apiSpy },
+        
         AlertController,
         GuardGuard,
-        Router
+        Router,
+        { provide: ActivatedRoute, useValue: {} }
       ],
       imports: [
         HttpClientModule,
@@ -35,6 +39,8 @@ describe('Iniciar Sesión', () => {
         MatProgressSpinnerModule,
         MatIconModule,
         BrowserAnimationsModule,
+        FormsModule,
+        RouterModule
       ]
     }).compileComponents();
 

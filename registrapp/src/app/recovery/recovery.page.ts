@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../servicios/api.service';
 
@@ -14,7 +14,7 @@ export class RecoveryPage implements OnInit {
   showSpinner: boolean = false; // Variable para controlar la visibilidad del spinner
   mensaje: string = ''; // Variable para el mensaje
 
-  constructor(private router: Router, private apiService: ApiService) { }
+  constructor(private router: Router, private apiService: ApiService, private ngZone: NgZone) { }
 
   enviarSolicitud() {
 
@@ -31,14 +31,22 @@ export class RecoveryPage implements OnInit {
             this.showSpinner = false;
             this.mensaje = ''; // Limpia el mensaje
             // Redirige a la página de inicio de sesión (login)
-            this.router.navigate(['/iniciar-sesion']);
+            // Redirige a la página de inicio de sesión (login) dentro de la zona de Angular *****
+            this.ngZone.run(() => {
+              this.router.navigate(['/iniciar-sesion']);
+            });
           }, 3000);
-
         } else {
-          this.mensaje = 'Error'       
+          this.mensaje = 'Error';
         }
-      });
+      },
+      (error) => {
+        console.error(error);
+        this.mensaje = 'Error';
+      }
+    );
   }
+
   
   ngOnInit() {
   
